@@ -1,0 +1,59 @@
+int rats[3][200] = {
+  {},
+  {},
+  {}
+};
+
+int ratIndex = 0;
+
+void damageCloseRat(int damage) {
+  ratIndex = 0;
+  while (ratIndex < 200) {
+    if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) < 1) {
+      rats[2][ratIndex] = rats[2][ratIndex] - damage;
+      return;
+    }
+    ratIndex = ratIndex + 1;
+  }
+}
+
+void createRats() {
+  ratIndex = 0;
+  while (ratIndex < 200) {
+    generate_random(0,150,1);
+    rats[0][ratIndex] = rand_num;
+    generate_random(0,300,1);
+    rats[1][ratIndex] = rand_num;
+    rats[2][ratIndex] = 10;
+    if (map[rats[0][ratIndex]][rats[1][ratIndex]] < 1) {
+      if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) > 6) {
+        ratIndex = ratIndex + 1;
+      }
+    }
+  }
+}
+void renderRats() {
+  ratIndex = 0;
+  while (ratIndex < 200) {
+    if (rats[2][ratIndex] == 0) {
+      map[rats[0][ratIndex]][rats[1][ratIndex]] = 0;
+      int ratSpawn = 0;
+      while(ratSpawn == 0) {
+        rats[2][ratIndex] = 10;
+        generate_random(0,150,1);
+        rats[0][ratIndex] = rand_num;
+        generate_random(0,300,1);
+        rats[1][ratIndex] = rand_num;
+        if (map[rats[0][ratIndex]][rats[1][ratIndex]] < 1) {
+          if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) > 6) {
+            ratSpawn = 1;
+          }
+        }
+      }
+    }
+    else {
+      map[rats[0][ratIndex]][rats[1][ratIndex]] = 3;
+    }
+    ratIndex = ratIndex + 1;
+  }
+}
