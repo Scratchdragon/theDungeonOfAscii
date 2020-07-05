@@ -1,2 +1,3 @@
 # theDungeonOfAscii
-Do not republish without change and proper credit
+Free to use provided the user follows the set rules for modding or modifying.
+Do not re-publish without change and proper credit.
