@@ -1,0 +1,14 @@
+char wall[] = "▢ ";
+char player[] = "# ";
+char enemy[] = "ⓔ ";
+char wallGrid[] = "▦ ";
+char arcaneWall[] = "▣ ";
+char chainFence[] = "▩ ";
+char door[] = "☖ ";
+char chest[] = "⊟ ";
+char gp[] = "$ ";
+char ironBaracade[] = "\\\\";
+char arcaneScroll[] = "⌺ ";
+char clearScroll[] = "⌻ ";
+char hole[] = "⬤ ";
+char floor[] = "  ";
