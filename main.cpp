@@ -43,7 +43,7 @@ void generate_random(int l, int r, int count) {
 //26 pc
 //3 watch
 
-int mapSize = 26;
+int mapSize = 20;
 
 float map[150][300] = {};
 
