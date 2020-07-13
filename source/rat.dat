@@ -1,4 +1,4 @@
-int rats[3][200] = {
+int rats[3][500] = {
   {},
   {},
   {}
@@ -8,8 +8,11 @@ int ratIndex = 0;
 
 void damageCloseRat(int damage) {
   ratIndex = 0;
-  while (ratIndex < 200) {
+  while (ratIndex < 500) {
     if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) < 1) {
+      printf(">#");
+      std::cout << (char(damage + 48));
+      printf("#< ");
       rats[2][ratIndex] = rats[2][ratIndex] - damage;
       return;
     }
@@ -18,40 +21,100 @@ void damageCloseRat(int damage) {
 }
 
 void createRats() {
+  int enemyAmount = level * 20;
   ratIndex = 0;
-  while (ratIndex < 200) {
+  while (ratIndex < enemyAmount) {
     generate_random(0,150,1);
     rats[0][ratIndex] = rand_num;
     generate_random(0,300,1);
     rats[1][ratIndex] = rand_num;
     rats[2][ratIndex] = 10;
-    if (map[rats[0][ratIndex]][rats[1][ratIndex]] < 1) {
-      if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) > 6) {
+    if (map[rats[0][ratIndex]][rats[1][ratIndex]] == 0) {
+      if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) > 7) {
         ratIndex = ratIndex + 1;
+        map[rats[0][ratIndex]][rats[1][ratIndex]] = 3;
       }
     }
   }
 }
-void renderRats() {
-  ratIndex = 0;
-  while (ratIndex < 200) {
-    if (rats[2][ratIndex] == 0) {
-      map[rats[0][ratIndex]][rats[1][ratIndex]] = 0;
-      int ratSpawn = 0;
-      while(ratSpawn == 0) {
-        rats[2][ratIndex] = 10;
-        generate_random(0,150,1);
-        rats[0][ratIndex] = rand_num;
-        generate_random(0,300,1);
-        rats[1][ratIndex] = rand_num;
-        if (map[rats[0][ratIndex]][rats[1][ratIndex]] < 1) {
-          if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) > 6) {
-            ratSpawn = 1;
-          }
-        }
+
+bool moveSucces = false;
+
+void ratMoveDir(int dir,int ratI) {
+  moveSucces = false;
+  if (dir == 1) {
+    if (map[rats[0][ratI]][rats[1][ratI] + 1] == 0) {
+      rats[1][ratI] = rats[1][ratI] + 1;
+      moveSucces = true;
+    }
+  }
+  if (dir == 2) {
+    if (map[rats[0][ratI]][rats[1][ratI] - 1] == 0) {
+      rats[1][ratI] = rats[1][ratI] - 1;
+      moveSucces = true;
+    }
+  }
+  if (dir == 3) {
+    if (map[rats[0][ratI] + 1][rats[1][ratI]] == 0) {
+      rats[0][ratI] = rats[0][ratI] + 1;
+      moveSucces = true;
+    }
+  }
+  if (dir == 4) {
+    if (map[rats[0][ratI] - 1][rats[1][ratI]] == 0) {
+      rats[0][ratI] = rats[0][ratI] - 1;
+      moveSucces = true;
+    }
+  }
+}
+
+void ratAi(int ratI2) {
+  generate_random(1,5,1);
+  if (distance(rats[0][ratIndex],rats[1][ratIndex],playerY,playerX) < 1) {
+    generate_random(0,3,1);
+    printf(">!");
+    std::cout << (char(rand_num + 48));
+    printf("!< ");
+    Health = Health - rand_num;
+  }
+  else if (distance(rats[0][ratI2],rats[1][ratI2],playerY,playerX) < 4) {
+    printf("! ");
+    if (rats[0][ratI2] > playerY) {
+      if (moveSucces == true) {
+        ratMoveDir(4,ratI2);
       }
     }
+    if (rats[0][ratI2] < playerY) {
+      if (moveSucces == true) {
+        ratMoveDir(3,ratI2);
+      }
+    }
+    if (rats[1][ratI2] < playerX) {
+      if (moveSucces == true) {
+        ratMoveDir(1,ratI2);
+      }
+    }
+    if (rats[1][ratI2] > playerX) {
+      if (moveSucces == true) {
+        ratMoveDir(2,ratI2);
+      }
+    }
+  }
+  else {
+    ratMoveDir(rand_num,ratIndex);
+  }
+}
+
+void renderRats() {
+  ratIndex = 0;
+  while (ratIndex < 500) {
+    map[rats[0][ratIndex]][rats[1][ratIndex]] = 0;
+    if (rats[2][ratIndex] <= 0) {
+      rats[0][ratIndex] = 0;
+      rats[1][ratIndex] = 0;
+    }
     else {
+      ratAi(ratIndex);
       map[rats[0][ratIndex]][rats[1][ratIndex]] = 3;
     }
     ratIndex = ratIndex + 1;
