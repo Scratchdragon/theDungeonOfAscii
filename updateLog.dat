@@ -1,0 +1,12 @@
+void showUpdates() {
+  printf("Update 0.4.0\n");
+  printf("• Added update log\n");
+  printf("• Fixed controls (You don't have to press enter, Z to interact/fight)\n");
+  printf("• Added floor system (each floor has different atrributes, luck and danger are higher the higher the floor\n  you are at)\n");
+  printf("• Several bug fixes around the enemys (enemys cannot spawn inside of walls, enemys are not faster than you,\n  enemys are escapable, enemys can die)\n");
+  printf("• Added entity system and entity world sensing (enemys are aware of their surrondings)\n");
+  printf("• Added a room for progressing to a higher floor\n");
+  printf("• Added progressive difficulty and reward (Floor 1 = 10 enemys and 1 / 1 chance for chest room reshuffle,\n  Floor 50 = 50 enemys and 1 / 50 chance for chest room reshuffle)\n");
+  printf("• Added 10 new rooms (25 rooms total)\n");
+  printf("• Added mobile mode\n");
+}
